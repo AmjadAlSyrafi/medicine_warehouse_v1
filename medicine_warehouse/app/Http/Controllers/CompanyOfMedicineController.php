@@ -10,6 +10,7 @@ class CompanyOfMedicineController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * test branch
      */
     public function index()
     {
