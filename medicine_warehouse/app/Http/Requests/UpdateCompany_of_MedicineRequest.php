@@ -21,9 +21,9 @@ class UpdateCompany_of_MedicineRequest extends FormRequest
      */
     public function rules(): array
     {
-        
+
             $method = $this->method();
-          
+
             if ($method === "PUT") {
             return [
                 'companyname' => ['required','string'],
@@ -34,3 +34,4 @@ class UpdateCompany_of_MedicineRequest extends FormRequest
             ];
         }
     }
+}

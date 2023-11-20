@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class company_nameResource extends ResourceCollection
+class Medicine_orderResourceCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,9 +14,6 @@ class company_nameResource extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return [
-        'id' => $this->id,
-        'company_name' => $this->company_name,
-        ];
+        return parent::toArray($request);
     }
 }
