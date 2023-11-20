@@ -21,8 +21,16 @@ class UpdateCompany_of_MedicineRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        
+            $method = $this->method();
+          
+            if ($method === "PUT") {
+            return [
+                'companyname' => ['required','string'],
+            ];
+        }   else {
+            return [
+                'companyname' => ['sometimes','required','string'],
+            ];
+        }
     }
-}

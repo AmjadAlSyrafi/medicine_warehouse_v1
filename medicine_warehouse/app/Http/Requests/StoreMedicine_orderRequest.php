@@ -13,7 +13,7 @@ class StoreMedicine_orderRequest extends FormRequest
     {
         return false;
     }
-
+   
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,7 +22,10 @@ class StoreMedicine_orderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id' => ['required','intger'],
+            'user_id' => ['required','string'],
+            'payment_status' => ['required','string'],
+            'total_price' =>['required','string'],
         ];
     }
 }
