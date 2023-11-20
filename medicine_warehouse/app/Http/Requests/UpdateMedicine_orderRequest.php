@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateMedicine_orderRequest extends FormRequest
 {
+    
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -22,7 +23,18 @@ class UpdateMedicine_orderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-        ];
+            $method = $this->method();
+          
+            if ($method === "PUT") {
+            return [
+                'payment_status' => ['required','string'],
+                'total_price' =>['required','string'],
+            ];
+        }   else {
+            return [
+                'payment_status' => ['sometimes','required','string'],
+                'total_price'=> ['sometimes','required','string'],
+            ];
+        }
     }
 }

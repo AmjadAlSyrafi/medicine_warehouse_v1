@@ -22,7 +22,8 @@ class StoreCompany_of_MedicineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id' => ['required','intger'],
+            'companyname' => ['required','string'],
         ];
     }
 }
