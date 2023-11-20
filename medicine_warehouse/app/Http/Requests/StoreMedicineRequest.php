@@ -22,7 +22,25 @@ class StoreMedicineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
+            'id' => ['required','intger'],
+            'scientificName' => ['required','string'],
+            'tradeName' => ['required','string'],
+            'classification' =>['required','string'],
+            'CompanyNameId' => ['required','string'],
+            'availableQuantity' => ['required','integer'],
+            'expiryDate' => ['required','date'],
+            'price' => ['required','numeric'],
         ];
+    }
+
+    protected function prepareForValidation() {
+        $this->merge([
+            'scientific_name'=> $this->scientificName ,
+            'trade_name'=> $this->tradeName ,
+            'expiry_date'=> $this->expiryDate ,
+            'company_name_id'=> $this->CompanyNameId ,
+            'available_quantity'=> $this->availableQuantity ,
+            ]);
     }
 }
