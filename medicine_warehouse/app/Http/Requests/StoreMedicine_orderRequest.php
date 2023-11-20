@@ -23,7 +23,7 @@ class StoreMedicine_orderRequest extends FormRequest
     {
         return [
             'id' => ['required','intger'],
-            'user_id' => ['required','string'],
+            'user_id' => ['required','intger'],
             'payment_status' => ['required','string'],
             'total_price' =>['required','string'],
         ];
