@@ -21,7 +21,9 @@ class MedicineResource extends JsonResource
             'availableQuantity' => $this->available_quantity,
             'expiryDate' => $this->expiry_date,
             'price' => $this->price,
+            'company_name'=> company_nameResource::make($this->company_name),
             'classification'=> ClassificationResource::make($this->classification)
+
         ];
     }
 }
