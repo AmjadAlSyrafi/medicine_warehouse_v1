@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources;
 
+use app\Http\Resources\order_detailsResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Resources\order_detailsResource;
-
 
 class Medicine_orderResource extends ResourceCollection
 {
@@ -16,7 +16,7 @@ class Medicine_orderResource extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-       
+
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,

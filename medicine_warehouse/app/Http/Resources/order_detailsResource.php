@@ -15,7 +15,7 @@ class order_detailsResource extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-       
+
         return [
             'id' => $this->id,
             'medicine_id' => $this->scientific_name,
@@ -24,7 +24,7 @@ class order_detailsResource extends ResourceCollection
             'quantity' => $this->expiry_date,
             'price' => $this->price,
             'company_name'=> company_nameResource::make($this->company_name),
-            
+
         ];
     }
 }
