@@ -20,8 +20,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//user signin /signup
 Route::post('/auth/register', [UserController::class, 'createUser']);
 Route::post('/auth/login', [UserController::class, 'loginUser']);
+
+//User Logout
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/auth/logout', [UserController::class, 'logoutUser']);
+});
 
 Route::middleware(['auth:sanctum' , 'role:admin'])->group(function () {
     Route::apiResource('medicines', MedicineController::class);
