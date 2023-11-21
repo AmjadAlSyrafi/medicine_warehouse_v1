@@ -11,9 +11,19 @@ class MedicineOrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $medicine_order = Medicine_order::query();
+
+        if ($request->has("IncludeOrder_details")) {
+            $medicine_order->with("Order_details");
+        }
+
+        $perPage = $request->input('per_page' , 5);
+        $medicines_orders = $medicine_order->paginate($perPage);
+
+         return new Medicine_OrderCollection($medicines_orders);
+        
     }
 
     /**
@@ -29,7 +39,7 @@ class MedicineOrderController extends Controller
      */
     public function store(StoreMedicine_orderRequest $request)
     {
-        //
+        return new Medicine_orderResource( Medicine_order::create($request->all()));
     }
 
     /**
@@ -37,7 +47,11 @@ class MedicineOrderController extends Controller
      */
     public function show(Medicine_order $medicine_order)
     {
-        //
+        if (!$medicine_order) {
+            return response()->json(['error' => 'The Order not found'], 404);
+        }
+
+        return new Medicine_orderResource( $medicine_order );
     }
 
     /**
@@ -53,7 +67,9 @@ class MedicineOrderController extends Controller
      */
     public function update(UpdateMedicine_orderRequest $request, Medicine_order $medicine_order)
     {
-        //
+        $medicine_order-> update($request->all());
+
+        return response()->json(['medicine_order' => $medicine_order], 201);
     }
 
     /**
@@ -61,6 +77,12 @@ class MedicineOrderController extends Controller
      */
     public function destroy(Medicine_order $medicine_order)
     {
-        //
+        if (!$medicine_order) {
+            return response()->json(['error' => 'The Medicine Order not found'], 404);
+        }
+
+        $medicine_order->delete();
+
+        return response()->json(['message' => 'Medicine Order deleted successfully'], 200);
     }
 }

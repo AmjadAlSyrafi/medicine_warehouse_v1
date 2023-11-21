@@ -4,6 +4,9 @@ namespace App\Http\Resources;
 use App\Http\Resources\ClassificationResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\company_nameResource;
+
+
 
 class MedicineResource extends JsonResource
 {
