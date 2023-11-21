@@ -76,7 +76,6 @@ class MedicineController extends Controller
 
         return response()->json(['medicine' => $medicine], 201);
     }
-
     /**
      * Remove the specified resource from storage.
      */
