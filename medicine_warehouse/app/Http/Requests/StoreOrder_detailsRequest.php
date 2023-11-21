@@ -22,7 +22,12 @@ class StoreOrder_detailsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id' => ['required','intger'],
+            'medicine_id' => ['required','intger'],
+            'order_id' => ['required','intger'],
+            'status' => ['required','string'],
+            'quantity' => ['required','intger'],
+            'price' => ['required','intger'],
         ];
     }
 }

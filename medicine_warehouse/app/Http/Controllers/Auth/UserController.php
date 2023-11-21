@@ -73,7 +73,26 @@ class UserController extends Controller
         'user' => $user,
         'token' => $user->createToken("API TOKEN")->plainTextToken
     ], 200);
-      
+
+    }
+
+    public function logoutUser(Request $request): JsonResponse
+    {
+    // Check if the user is authenticated
+    if (!Auth::check()) {
+        return response()->json([
+            'status' => false,
+            'message' => 'User is not authenticated',
+        ], 401);
+        // If authenticated, delete the current access token
+    } else {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User Logged Out Successfully',
+        ]);
+    }
     }
 }
 
