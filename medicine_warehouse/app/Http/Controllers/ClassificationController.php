@@ -11,9 +11,18 @@ class ClassificationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $classification = Classification::query();
+
+        if($request->has("IncludeMedicine")){
+            $classification->with("Medicine");
+        } 
+
+        $perPage = $request->input('per_page' , 6);
+        $classifications = $classification->paginate($perPage);
+
+         return new $ClassificationsCollection($classifications);
     }
 
     /**

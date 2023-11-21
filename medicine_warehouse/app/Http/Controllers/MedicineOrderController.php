@@ -15,8 +15,8 @@ class MedicineOrderController extends Controller
     {
         $medicine_order = Medicine_order::query();
 
-        if ($request->has("Include[Order_details,Company_name]")) {
-            $medicine_order->with("Order_details", "Company_name");
+        if ($request->has("IncludeOrder_details")) {
+            $medicine_order->with("Order_details");
         }
 
         $perPage = $request->input('per_page' , 5);

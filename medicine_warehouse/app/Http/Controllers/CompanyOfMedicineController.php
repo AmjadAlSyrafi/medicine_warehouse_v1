@@ -40,9 +40,11 @@ class CompanyOfMedicineController extends Controller
         if (!$company_of_Medicine) {
             return response()->json(['error' => 'The Order not found'], 404);
         }
+        return new Company_nameResource( $company_of_Medicine );
     }
 
     /**
+     * return new Company_nameResource( $medicine );
      * Show the form for editing the specified resource.
      */
     public function edit(Company_of_Medicine $company_of_Medicine)
