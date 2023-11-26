@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Medicine_order;
+use App\Http\Resources\Medicine_orderCollection;
+use App\Http\Resources\Medicine_orderResource;
 use App\Http\Requests\StoreMedicine_orderRequest;
 use App\Http\Requests\UpdateMedicine_orderRequest;
 
@@ -22,8 +25,8 @@ class MedicineOrderController extends Controller
         $perPage = $request->input('per_page' , 5);
         $medicines_orders = $medicine_order->paginate($perPage);
 
-         return new Medicine_OrderCollection($medicines_orders);
-        
+         return new Medicine_orderCollection($medicines_orders);
+
     }
 
     /**
