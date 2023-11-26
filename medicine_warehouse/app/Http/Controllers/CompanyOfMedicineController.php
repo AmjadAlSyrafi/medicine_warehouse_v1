@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Company_of_Medicine;
+use App\Http\Resources\Company_of_MedicineResource;
 use App\Http\Requests\StoreCompany_of_MedicineRequest;
 use App\Http\Requests\UpdateCompany_of_MedicineRequest;
 
@@ -30,7 +32,7 @@ class CompanyOfMedicineController extends Controller
      */
     public function store(StoreCompany_of_MedicineRequest $request)
     {
-        return new Company_nameResource( Company_of_Medicine::create($request->all()));
+        return new Company_of_MedicineResource( Company_of_Medicine::create($request->all()));
     }
 
     /**
@@ -41,7 +43,7 @@ class CompanyOfMedicineController extends Controller
         if (!$company_of_Medicine) {
             return response()->json(['error' => 'The Order not found'], 404);
         }
-        return new Company_nameResource( $company_of_Medicine );
+        return new Company_of_MedicineResource( $company_of_Medicine );
     }
 
     /**
@@ -50,7 +52,7 @@ class CompanyOfMedicineController extends Controller
      */
     public function edit(Company_of_Medicine $company_of_Medicine)
     {
-      
+
     }
 
     /**
@@ -58,9 +60,9 @@ class CompanyOfMedicineController extends Controller
      */
     public function update(UpdateCompany_of_MedicineRequest $request, Company_of_Medicine $company_of_Medicine)
     {
-        $company_name-> update($request->all());
+        $company_of_Medicine-> update($request->all());
 
-        return response()->json(['company_of_Medicine' => $company_name], 201);
+        return response()->json(['company_of_Medicine' => $company_of_Medicine], 201);
     }
 
     /**

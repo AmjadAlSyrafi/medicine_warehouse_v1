@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Http\Resources\company_nameResource;
+use app\Http\Resources\Company_of_MedicineResource;
 
 class order_detailsResource extends ResourceCollection
 {
@@ -23,7 +23,7 @@ class order_detailsResource extends ResourceCollection
             'status' => $this->available_quantity,
             'quantity' => $this->expiry_date,
             'price' => $this->price,
-            'company_name'=> company_nameResource::make($this->company_name),
+            'company_name'=> Company_of_MedicineResource::make($this->company_name),
 
         ];
     }

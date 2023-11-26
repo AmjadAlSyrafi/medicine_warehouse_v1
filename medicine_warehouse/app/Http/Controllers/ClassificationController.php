@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Classification;
 use App\Http\Requests\StoreClassificationRequest;
 use App\Http\Requests\UpdateClassificationRequest;
+use Illuminate\Http\Request;
+use app\Http\Resources\ClassificationCollection;
+
 
 class ClassificationController extends Controller
 {
@@ -17,12 +20,12 @@ class ClassificationController extends Controller
 
         if($request->has("IncludeMedicine")){
             $classification->with("Medicine");
-        } 
+        }
 
         $perPage = $request->input('per_page' , 6);
         $classifications = $classification->paginate($perPage);
 
-         return new $ClassificationsCollection($classifications);
+         return new ClassificationCollection($classifications);
     }
 
     /**
