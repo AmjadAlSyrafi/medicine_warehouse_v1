@@ -22,4 +22,10 @@ class Medicine extends Model
     {
         return $this->belongsTo(Company_Of_Medicine::class, 'company_name_id');
     }
+
+    public function favoriteMedicines()
+    {
+        return $this->hasMany(FavoriteMedicine::class);
+    }
+
 }

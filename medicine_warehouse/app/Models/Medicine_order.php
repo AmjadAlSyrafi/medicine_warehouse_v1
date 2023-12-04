@@ -12,12 +12,13 @@ class Medicine_order extends Model
         'user_id',
         'total_price',
         'payment_status',
-    ]; 
+        'status',
+    ];
     public function user()
     {
         return $this->belongsTo(user::class);
     }
-  
+
     // A medicine order has many medicines through the user
 
     public function orderDetails()
