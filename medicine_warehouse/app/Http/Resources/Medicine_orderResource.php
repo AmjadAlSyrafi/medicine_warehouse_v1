@@ -20,11 +20,9 @@ class Medicine_orderResource extends ResourceCollection
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'status' => $this->status,
             'payment_status' => $this->payment_status,
             'total_price' => $this->total_price,
-            'medicine_id' => $this->medicine_id,
-            'order_details'=> order_detailsResource::make($this->order_details)
-
         ];
     }
 }

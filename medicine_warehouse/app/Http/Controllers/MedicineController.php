@@ -8,6 +8,10 @@ use App\Http\Resources\MedicineCollection;
 use App\Http\Requests\StoreMedicineRequest;
 use App\Http\Requests\UpdateMedicineRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Repo\Functions;
+
+
 
 class MedicineController extends Controller
 {
@@ -16,18 +20,39 @@ class MedicineController extends Controller
      */
     public function index(Request $request)
     {
-        $medicine = Medicine::query();
+        // Fetch all medicines
+        $medicines = Medicine::query();
 
-        if($request->has("IncludeClassification")){
-           $medicine->with("classification");
-        } 
+        // Get the authenticated user
+        $user = Auth::user();
 
-        $perPage = $request->input('per_page' , 10);
-        $medicines = $medicine->paginate($perPage);
+        // Check if "IncludeClassification" is present in the request
+        if ($request->has("IncludeClassification")) {
+            $medicines->with("classification");
+        }
 
-         return new MedicineCollection($medicines);
-        
+        $perPage = $request->input('per_page', 10);
+
+        // Paginate the query before applying the map function
+        $paginatedMedicines = $medicines->paginate($perPage);
+
+        // Append is_favorite attribute to each medicine
+  
+        $paginatedMedicines = Functions::makeFavorite($paginatedMedicines);
+
+        // Return the JSON response
+        return response()->json([
+            'result' => true,
+            'message' => 'application medicine page',
+            'data' => [
+                new  MedicineCollection($paginatedMedicines)
+            ],
+        ], 200);
+
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.

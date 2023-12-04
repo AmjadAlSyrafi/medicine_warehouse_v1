@@ -27,7 +27,8 @@ class MedicineResource extends JsonResource
             'price' => $this->price,
             'companyName'=> Company_of_MedicineResource::make($this->company),
             //'companyName'=>$this->company,
-            'classification'=> ClassificationResource::make($this->classification)
+            'classification'=> ClassificationResource::make($this->classification),
+            'is_favorite' => $this->is_favorite,
 
         ];
     }

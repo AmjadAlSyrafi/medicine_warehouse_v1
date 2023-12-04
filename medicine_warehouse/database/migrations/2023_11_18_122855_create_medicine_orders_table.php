@@ -16,8 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('payment_status')->default('not_paid');
             $table->integer('total_price')->default(0);
+            $table->string('status')->default('in_preparation');
             $table->timestamps();
-    
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
