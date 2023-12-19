@@ -14,7 +14,9 @@ class CheckSanctumToken
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {
+    {           if (!$request->bearerToken()){
+                     return $next($request);
+    }
                 // Check if the request has a valid Sanctum token
                 if (!$request->bearerToken() || !auth()->guard('sanctum')->check()) {
                     return response()->json([
