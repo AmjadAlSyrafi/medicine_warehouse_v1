@@ -104,7 +104,7 @@ class MedicineOrderController extends Controller
 
 public function payment(Request $request , Auth $auth)
 {
-    $user = $auth->user();
+    $user = $auth::user();
     $total_price=0;
 
     foreach ($request->items as $item){

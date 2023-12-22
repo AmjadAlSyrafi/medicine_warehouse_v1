@@ -35,7 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
  //admin Role Api
 Route::middleware(['auth:sanctum' , 'role:admin' , 'checkSanctumToken'])->group(function () {
     //get the order || ?IncludeOrder_details={order_id} ex:  /order?IncludeOrder_details=2
-    Route::get('/order' , [MedicineOrderController::class , 'index']);
+   // Route::get('/order' , [MedicineOrderController::class , 'index']);
     //update the payment status
     //Soon..
     //update the status

@@ -9,12 +9,12 @@ class Medicine extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'scientific_name', 'trade_name', 'classification', 'Company_name_id', 'available_quantity', 'expiry_date', 'price',
+        'scientific_name', 'trade_name', 'classification_id', 'company_name_id', 'available_quantity', 'expiry_date', 'price',
     ];
 
     public function classification()
     {
-        return $this->belongsTo(Classification::class);
+        return $this->belongsTo(Classification::class , 'classification_id');
     }
 
     // A medicine belongs to a company
