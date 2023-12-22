@@ -11,7 +11,7 @@ class StoreMedicineRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,12 +22,10 @@ class StoreMedicineRequest extends FormRequest
     public function rules(): array
     {
         return [
-
-            'id' => ['required','intger'],
             'scientificName' => ['required','string'],
             'tradeName' => ['required','string'],
-            'classification' =>['required','string'],
-            'CompanyNameId' => ['required','string'],
+            'classificationId' =>['required','integer'],
+            'companyNameId' => ['required','integer'],
             'availableQuantity' => ['required','integer'],
             'expiryDate' => ['required','date'],
             'price' => ['required','numeric'],
@@ -41,6 +39,7 @@ class StoreMedicineRequest extends FormRequest
             'expiry_date'=> $this->expiryDate ,
             'company_name_id'=> $this->CompanyNameId ,
             'available_quantity'=> $this->availableQuantity ,
+            'classification_id' => $this->classificationId,
             ]);
     }
 }

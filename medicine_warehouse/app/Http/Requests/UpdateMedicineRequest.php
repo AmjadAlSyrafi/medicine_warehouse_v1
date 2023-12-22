@@ -22,13 +22,13 @@ class UpdateMedicineRequest extends FormRequest
     public function rules(): array
     {
         $method = $this->method();
-          
+
         if ($method === "PUT") {
         return [
-            'scientificName' => ['required','string'],
+            'scientificNameId' => ['required','integer'],
             'tradeName' => ['required','string'],
             'classification' =>['required','string'],
-            'manufacturer' => ['required','string'],
+            'CompanyNameId' => ['required','integer'],
             'availableQuantity' => ['required','integer'],
             'expiryDate' => ['required','date'],
             'price' => ['required','numeric'],
@@ -36,10 +36,10 @@ class UpdateMedicineRequest extends FormRequest
         ];
     }   else {
         return [
-            'scientificName' => ['sometimes','required','string'],
+            'scientificNameId' => ['sometimes','required','integer'],
             'tradeName' => ['sometimes','required','string'],
             'classification' =>['sometimes','required','string'],
-            'CompanyNameId' => ['sometimes','required','string'],
+            'CompanyNameId' => ['sometimes','required','integer'],
             'availableQuantity' => ['sometimes','required','integer'],
             'expiryDate' => ['sometimes','required','date'],
             'price' => ['sometimes','required','numeric'],
@@ -51,11 +51,11 @@ class UpdateMedicineRequest extends FormRequest
         $this->merge([
             'scientific_name'=> $this->scientificName ,
             'trade_name'=> $this->tradeName ,
-            'expiry_date'=> $this->expiryDate , 
+            'expiry_date'=> $this->expiryDate ,
             'available_quantity'=> $this->availableQuantity ,
             'company_name_id'=> $this->CompanyNameId ,
             ]);
     }
-        
+
  }
 

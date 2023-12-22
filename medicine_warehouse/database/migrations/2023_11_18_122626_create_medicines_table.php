@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('scientific_name');
             $table->string('trade_name');
-            $table->unsignedBigInteger('classification_id');
-            $table->unsignedBigInteger('company_name_id');
+            $table->unsignedBigInteger('classification_id')->nullable()->constrained();
+            $table->unsignedBigInteger('company_name_id')->nullable()->constrained();
             $table->integer('available_quantity');
             $table->date('expiry_date');
             $table->decimal('price', 8, 2);
