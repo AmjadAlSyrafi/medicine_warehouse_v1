@@ -63,6 +63,7 @@ Route::middleware(['auth:sanctum' , 'role:pharmacy' , 'checkSanctumToken'])->pre
     //the home page
     //View the medicines
     Route::get('/medicines' , [MedicineController::class , 'index']);
+    Route::get('/medicine/{medicine}' , [MedicineController::class , 'view']);
     //search for Medicin and filtering
     Route::get('/search',[ClassificationController::class , 'search']);
     //make the medicine favorite /unfavorite

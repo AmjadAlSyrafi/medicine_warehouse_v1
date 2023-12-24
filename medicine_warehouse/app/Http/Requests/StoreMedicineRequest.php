@@ -37,7 +37,7 @@ class StoreMedicineRequest extends FormRequest
             'scientific_name'=> $this->scientificName ,
             'trade_name'=> $this->tradeName ,
             'expiry_date'=> $this->expiryDate ,
-            'company_name_id'=> $this->CompanyNameId ,
+            'company_name_id'=> $this->companyNameId ,
             'available_quantity'=> $this->availableQuantity ,
             'classification_id' => $this->classificationId,
             ]);

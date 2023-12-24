@@ -25,9 +25,9 @@ class UpdateMedicineRequest extends FormRequest
 
         if ($method === "PUT") {
         return [
-            'scientificNameId' => ['required','integer'],
+            'scientificName' => ['required','string'],
             'tradeName' => ['required','string'],
-            'classification' =>['required','string'],
+            'classificationId' =>['required','integer'],
             'CompanyNameId' => ['required','integer'],
             'availableQuantity' => ['required','integer'],
             'expiryDate' => ['required','date'],
@@ -36,9 +36,9 @@ class UpdateMedicineRequest extends FormRequest
         ];
     }   else {
         return [
-            'scientificNameId' => ['sometimes','required','integer'],
+            'scientificName' => ['sometimes','required','string'],
             'tradeName' => ['sometimes','required','string'],
-            'classification' =>['sometimes','required','string'],
+            'classificationId' =>['sometimes','required','integer'],
             'CompanyNameId' => ['sometimes','required','integer'],
             'availableQuantity' => ['sometimes','required','integer'],
             'expiryDate' => ['sometimes','required','date'],
@@ -52,8 +52,9 @@ class UpdateMedicineRequest extends FormRequest
             'scientific_name'=> $this->scientificName ,
             'trade_name'=> $this->tradeName ,
             'expiry_date'=> $this->expiryDate ,
+            'company_name_id'=> $this->companyNameId ,
             'available_quantity'=> $this->availableQuantity ,
-            'company_name_id'=> $this->CompanyNameId ,
+            'classification_id' => $this->classificationId,
             ]);
     }
 

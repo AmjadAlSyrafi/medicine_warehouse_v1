@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Medicine_order;
 use App\Models\Medicine;
 use App\Models\Order_details;
-use App\Http\Resources\Medicine_orderCollection;
-use App\Http\Resources\Medicine_orderResource;
+use App\Http\Resources\MedicineOrderCollection;
+use App\Http\Resources\MedicineOrderResource;
 use App\Http\Requests\StoreMedicine_orderRequest;
 use App\Http\Requests\UpdateMedicine_orderRequest;
 use app\Http\Repositories\MedicineFunction;
@@ -21,23 +21,26 @@ class MedicineOrderController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $medicine_order = Medicine_order::query();
+    {   $user = Auth::user();
+        $medicine_order = Medicine_order::query()->where('user_id',$user->id)->get();
 
         if ($request->has("IncludeOrder_details")) {
             $order = $request->input("IncludeOrder_details");
+            $medicine_order = Medicine_order::query()->where('id',$order)->where('user_id',$user->id)->get();
+            if ($medicine_order->isEmpty()) {
+                return response()->json(['message' => 'NO Orders Were Found',
+                                         'status'=> false], 404);
+            }
             $order_details = Order_details::query()->where('order_id', $order)->get();
-            //dd($order_details);
-
             return new orderDetailsCollection($order_details);
         }
-
-
-        $perPage = $request->input('per_page' , 5);
-        $medicine_order = $medicine_order->paginate($perPage);
-
-         return new Medicine_orderCollection($medicine_order);
-
+        if ($medicine_order->isEmpty()) {
+            return response()->json(['message' => 'NO Orders Were Found',
+                                     'status'=> false], 404);
+        }
+             return response()->json(['message' => 'Orders Were Found',
+                                 'status'=> true ,
+                                 'data' => new MedicineOrderCollection($medicine_order) ], 201);
     }
 
     /**
@@ -53,7 +56,7 @@ class MedicineOrderController extends Controller
      */
     public function store(StoreMedicine_orderRequest $request)
     {
-        return new Medicine_orderResource( Medicine_order::create($request->all()));
+        //return new MedicineOrderResource( Medicine_order::create($request->all()));
     }
 
     /**
@@ -65,7 +68,7 @@ class MedicineOrderController extends Controller
             return response()->json(['error' => 'The Order not found'], 404);
         }
 
-        return new Medicine_orderResource( $medicine_order );
+        return new MedicineOrderResource( $medicine_order );
     }
 
     /**
@@ -131,6 +134,8 @@ public function payment(Request $request , Auth $auth)
 
      }
 
+ return response()->json(['status' => true,
+                          'message' =>'order added successfully' ], 201);
 }
 
 }
