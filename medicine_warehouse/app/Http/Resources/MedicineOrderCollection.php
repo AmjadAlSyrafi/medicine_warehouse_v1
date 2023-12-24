@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class Medicine_orderCollection extends ResourceCollection
+class MedicineOrderCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

@@ -125,5 +125,16 @@ class MedicineController extends Controller
         return response()->json(['message' => 'Medicine deleted successfully'], 200);
     }
 
+    public function view($medicine)
+    {
+        $medicines = Medicine::query()->where('id', $medicine)->get();
+
+        if (!$medicine) {
+            return response()->json(['error' => 'Medicine not found'], 404);
+        }
+
+        return new MedicineCollection($medicines);
+    }
+
 }
 
