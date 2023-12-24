@@ -5,10 +5,11 @@ use App\Http\Controllers\Repo\Functions;
 use Illuminate\Validation\ValidationException;
 use App\Http\Resources\MedicineCollection;
 use App\Models\Classification;
+use App\Http\Resources\ClassificationResource;
 use App\Http\Requests\StoreClassificationRequest;
 use App\Http\Requests\UpdateClassificationRequest;
 use Illuminate\Http\Request;
-use app\Http\Resources\ClassificationCollection;
+use App\Http\Resources\ClassificationCollection;
 use App\Models\Medicine;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,10 +26,7 @@ class ClassificationController extends Controller
         if($request->has("IncludeMedicine")){
             $classification->with("Medicine");
         }
-
-        $perPage = $request->input('per_page' , 6);
-        $classifications = $classification->paginate($perPage);
-
+        $classifications = $classification->get();
          return new ClassificationCollection($classifications);
     }
 
@@ -45,7 +43,7 @@ class ClassificationController extends Controller
      */
     public function store(StoreClassificationRequest $request)
     {
-        //
+        return new ClassificationResource(Classification::create(($request->all())));
     }
 
     /**
@@ -53,7 +51,10 @@ class ClassificationController extends Controller
      */
     public function show(Classification $classification)
     {
-        //
+        if (!$classification) {
+            return response()->json(['error' => 'The Classification not found'], 404);
+        }
+        return new ClassificationResource($classification);
     }
 
     /**

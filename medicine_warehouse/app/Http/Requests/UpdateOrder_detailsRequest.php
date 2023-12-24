@@ -6,14 +6,14 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateOrder_detailsRequest extends FormRequest
 {
-    
-    
+
+
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class UpdateOrder_detailsRequest extends FormRequest
     public function rules(): array
     {
         $method = $this->method();
-          
+
         if ($method === "PUT") {
         return [
             'status' => ['required','string'],

@@ -37,15 +37,25 @@ class MedicineController extends Controller
         $paginatedMedicines = $medicines->paginate($perPage);
 
         // Append is_favorite attribute to each medicine
-  
-        $paginatedMedicines = Functions::makeFavorite($paginatedMedicines);
 
+        $paginatedMedicines = Functions::makeFavorite($paginatedMedicines);
+        $paginatedMedicinesArray = $paginatedMedicines->toArray();
         // Return the JSON response
         return response()->json([
             'result' => true,
             'message' => 'application medicine page',
             'data' => [
                 new  MedicineCollection($paginatedMedicines)
+            ],
+            'pagination' => [
+                'total' => $paginatedMedicinesArray['total'],
+                'per_page' => $paginatedMedicinesArray['per_page'],
+                'current_page' => $paginatedMedicinesArray['current_page'],
+                'last_page' => $paginatedMedicinesArray['last_page'],
+                'next_page_url' => $paginatedMedicines->nextPageUrl(),
+                'prev_page_url' => $paginatedMedicines->previousPageUrl(),
+                'first_page_url' => $paginatedMedicines->url(1),
+                'last_page_url' => $paginatedMedicines->url($paginatedMedicinesArray['last_page']),
             ],
         ], 200);
 

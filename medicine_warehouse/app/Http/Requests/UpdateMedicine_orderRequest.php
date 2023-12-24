@@ -12,7 +12,7 @@ class UpdateMedicine_orderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class UpdateMedicine_orderRequest extends FormRequest
     {
 
             $method = $this->method();
-            
+
             if ($method === "PUT") {
             return [
                 'payment_status' => ['required','string'],

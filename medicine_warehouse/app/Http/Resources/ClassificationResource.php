@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use app\Http\Resources\MedicineResource;
+use App\Http\Resources\MedicineCollection;
 
 class ClassificationResource extends JsonResource
 {
@@ -18,7 +18,7 @@ class ClassificationResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'medicine'=> MedicineResource::Collection($this->whenLoaded('medicine')),
+            'medicine'=> MedicineCollection::make($this->whenLoaded('medicine')),
         ];
     }
 }
