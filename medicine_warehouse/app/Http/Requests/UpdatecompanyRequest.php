@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCompany_of_MedicineRequest extends FormRequest
+class UpdatecompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,9 +21,16 @@ class StoreCompany_of_MedicineRequest extends FormRequest
      */
     public function rules(): array
     {
+        $method = $this->method();
+
+        if ($method === "PUT") {
         return [
-            'id' => ['required','intger'],
-            'companyname' => ['required','string'],
+            'company_name' => ['required','string'],
         ];
+    }   else {
+        return [
+            'company_name' => ['sometimes','required','string'],
+        ];
+    }
     }
 }

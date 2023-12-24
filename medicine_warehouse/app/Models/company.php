@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Company_of_Medicine extends Model
+class company extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'companyName',
+        'company_name',
         // Add any other fields you may need for companies
     ];
 

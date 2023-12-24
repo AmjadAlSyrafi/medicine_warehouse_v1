@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\FavoriteMedicineController;
 use App\Http\Controllers\MedicineOrderController;
-use App\Http\Controllers\CompanyOfMedicineController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClassificationController;
 /*
 |--------------------------------------------------------------------------
@@ -45,9 +45,9 @@ Route::middleware(['auth:sanctum' , 'role:admin' , 'checkSanctumToken'])->group(
     //search for Medicin and filtering
     Route::get('/search',[ClassificationController::class , 'search']);
     //CRUD for company name
-    Route::apiResource('/companyName', CompanyOfMedicineController::class);
+    Route::apiResource('/company', CompanyController::class);
     //CRUD for classification
-    Route::apiResource('/classification', ClassificationController::class);
+    Route::apiResource('/classifications', ClassificationController::class);
     Route::post('/favorite-medicines', [FavoriteMedicineController::class, 'store']);
 });
 

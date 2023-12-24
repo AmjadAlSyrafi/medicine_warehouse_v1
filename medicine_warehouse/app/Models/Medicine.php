@@ -20,7 +20,7 @@ class Medicine extends Model
     // A medicine belongs to a company
     public function company()
     {
-        return $this->belongsTo(Company_Of_Medicine::class, 'company_name_id');
+        return $this->belongsTo(Company::class, 'company_name_id');
     }
 
     public function favoriteMedicines()
