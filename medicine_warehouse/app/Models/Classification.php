@@ -10,7 +10,7 @@ class Classification extends Model
 
     use HasFactory;
     protected $fillable = [
-        'name',
+        'name','arabic',
         // Add any other fields you may need for classifications
     ];
 

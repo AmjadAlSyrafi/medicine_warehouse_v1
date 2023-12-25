@@ -26,10 +26,13 @@ class UpdatecompanyRequest extends FormRequest
         if ($method === "PUT") {
         return [
             'company_name' => ['required','string'],
+            'arabic' => ['required','string'],
+
         ];
     }   else {
         return [
             'company_name' => ['sometimes','required','string'],
+            'arabic' => ['sometimes','required','string'],
         ];
     }
     }

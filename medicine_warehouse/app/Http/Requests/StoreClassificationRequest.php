@@ -23,6 +23,7 @@ class StoreClassificationRequest extends FormRequest
     {
         return [
             'name' => ['required','string'],
+            'arabic' => ['required','string'],
         ];
     }
 }

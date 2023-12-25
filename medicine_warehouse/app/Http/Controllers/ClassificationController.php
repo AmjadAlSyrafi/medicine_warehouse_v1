@@ -70,7 +70,9 @@ class ClassificationController extends Controller
      */
     public function update(UpdateClassificationRequest $request, Classification $classification)
     {
-        //
+        $classification-> update($request->all());
+        $a = new ClassificationResource($classification);
+        return response()->json(['classification' => $a], 201);
     }
 
     /**
