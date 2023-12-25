@@ -28,12 +28,12 @@ class UpdateMedicine_orderRequest extends FormRequest
             if ($method === "PUT") {
             return [
                 'payment_status' => ['required','string'],
-                'total_price' =>['required','string'],
+                'total_price' =>['required','integer'],
             ];
         }   else {
             return [
                 'payment_status' => ['sometimes','required','string'],
-                'total_price'=> ['sometimes','required','string'],
+                'total_price'=> ['sometimes','required','integer'],
             ];
         }
     }

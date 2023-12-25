@@ -34,12 +34,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
  //admin Role Api
 Route::middleware(['auth:sanctum' , 'role:admin' , 'checkSanctumToken'])->group(function () {
-    //get the order || ?IncludeOrder_details={order_id} ex:  /order?IncludeOrder_details=2
-   // Route::get('/order' , [MedicineOrderController::class , 'index']);
-    //update the payment status
-    //Soon..
-    //update the status
-    //Soon..
+    //get the order
+    Route::get('/order' , [MedicineOrderController::class , 'orderForAdmin']);
+    //update the payment status & update the status
+    Route::patch('/order/{medicine}' , [MedicineOrderController::class , 'put']);
     //CRUD for Medicine
     Route::apiResource('/medicines', MedicineController::class);
     //search for Medicin and filtering
@@ -48,7 +46,6 @@ Route::middleware(['auth:sanctum' , 'role:admin' , 'checkSanctumToken'])->group(
     Route::apiResource('/company', CompanyController::class);
     //CRUD for classification
     Route::apiResource('/classifications', ClassificationController::class);
-    Route::post('/favorite-medicines', [FavoriteMedicineController::class, 'store']);
 });
 
 //----------------------------------------------------------------------------------------------
@@ -60,9 +57,10 @@ Route::middleware(['auth:sanctum' , 'role:pharmacy' , 'checkSanctumToken'])->pre
     Route::post('/addorder' , [MedicineOrderController::class, 'payment' ]);
     //get the order || ?IncludeOrder_details={order_id} ex:  /order?IncludeOrder_details=2
     Route::get('/order' , [MedicineOrderController::class , 'index']);
-    //the home page
+    //..........The home page.........
     //View the medicines
     Route::get('/medicines' , [MedicineController::class , 'index']);
+    //get the medicine by the id
     Route::get('/medicine/{medicine}' , [MedicineController::class , 'view']);
     //search for Medicin and filtering
     Route::get('/search',[ClassificationController::class , 'search']);
