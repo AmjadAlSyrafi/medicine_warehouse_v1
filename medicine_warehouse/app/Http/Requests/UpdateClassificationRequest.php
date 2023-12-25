@@ -26,10 +26,12 @@ class UpdateClassificationRequest extends FormRequest
             if ($method === "PUT") {
             return [
                 'name' => ['required','string'],
+                'arabic' => ['required','string'],
             ];
         }   else {
             return [
                 'name' => ['sometimes','required','string'],
+                'arabic' => ['sometimes','required','string'],
             ];
         }
     }

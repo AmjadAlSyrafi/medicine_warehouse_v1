@@ -10,7 +10,7 @@ class company extends Model
     use HasFactory;
 
     protected $fillable = [
-        'company_name',
+        'company_name','arabic',
         // Add any other fields you may need for companies
     ];
 

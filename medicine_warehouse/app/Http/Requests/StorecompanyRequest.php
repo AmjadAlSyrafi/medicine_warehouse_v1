@@ -23,6 +23,7 @@ class StorecompanyRequest extends FormRequest
     {
         return [
             'company_name' => ['required','string'],
+            'arabic' => ['required','string'],
         ];
     }
 }

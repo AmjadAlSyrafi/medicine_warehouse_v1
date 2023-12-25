@@ -43,7 +43,6 @@ class UpdateMedicineRequest extends FormRequest
             'availableQuantity' => ['sometimes','required','integer'],
             'expiryDate' => ['sometimes','required','date'],
             'price' => ['sometimes','required','numeric'],
-
         ];
     }
 }

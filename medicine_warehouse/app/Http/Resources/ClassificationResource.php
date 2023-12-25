@@ -18,6 +18,7 @@ class ClassificationResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'arabic' => $this->arabic,
             'medicine'=> MedicineCollection::make($this->whenLoaded('medicine')),
         ];
     }

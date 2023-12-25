@@ -17,6 +17,7 @@ class CompanyResource extends JsonResource
         return [
             'id'=> $this->id,
             'companyName' => $this->company_name,
+            'arabic' => $this->arabic,
             ];
     }
 }
