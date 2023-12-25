@@ -138,4 +138,22 @@ public function payment(Request $request , Auth $auth)
                           'message' =>'order added successfully' ], 201);
 }
 
+public function put(UpdateMedicine_orderRequest $request, $medicine)
+{
+    $medicine_order = Medicine_order::query()->where('id', $medicine)->first();
+    $medicine_order-> update($request->all());
+
+    return response()->json(['message' => 'order was updated' ,
+                             'status' => true,
+                             'medicine_order' => new MedicineOrderResource($medicine_order) ,], 201);
+}
+
+public function orderForAdmin()
+{
+    $medicine_order = Medicine_order::query()->get();
+    return response()->json(['message' => 'orders were found' ,
+                             'status' => true,
+                             'medicine_order' => new MedicineOrderCollection($medicine_order) ,], 201);
+}
+
 }
