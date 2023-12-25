@@ -109,7 +109,7 @@ class MedicineController extends Controller
     {
         $medicine-> update($request->all());
 
-        return response()->json(['medicine' => $medicine], 201);
+        return response()->json(['medicine' => new MedicineResource($medicine)], 201);
     }
     /**
      * Remove the specified resource from storage.
