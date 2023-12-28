@@ -11,9 +11,9 @@ use App\Http\Resources\MedicineOrderCollection;
 use App\Http\Resources\MedicineOrderResource;
 use App\Http\Requests\StoreMedicine_orderRequest;
 use App\Http\Requests\UpdateMedicine_orderRequest;
-use app\Http\Repositories\MedicineFunction;
+use App\Http\Controllers\Repo\Functions;
 use Illuminate\Support\Facades\Auth;
-
+use Carbon\Carbon;
 
 class MedicineOrderController extends Controller
 {
@@ -82,11 +82,9 @@ class MedicineOrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMedicine_orderRequest $request, Medicine_order $medicine_order)
+    public function update(UpdateMedicine_orderRequest $request, Medicine_order $medicineOrder)
     {
-        $medicine_order-> update($request->all());
-
-        return response()->json(['medicine_order' => $medicine_order], 201);
+        //
     }
 
     /**
@@ -140,12 +138,26 @@ public function payment(Request $request , Auth $auth)
 
 public function put(UpdateMedicine_orderRequest $request, $medicine)
 {
-    $medicine_order = Medicine_order::query()->where('id', $medicine)->first();
-    $medicine_order-> update($request->all());
-
-    return response()->json(['message' => 'order was updated' ,
+    $medicineOrder = Medicine_order::query()->where('id', $medicine)->first();
+    if (!$medicineOrder) {
+        return response()->json(['status' => false,
+                                 'error' => 'MedicineOrder not found'], 404);
+    }
+    $medicineOrder-> update($request->all());
+    if (strtolower($medicineOrder->status) == "sent" )
+    {
+        $orderDetails = Order_details::where('order_id', $medicineOrder->id)->get();
+        foreach ($orderDetails as $orderDetail) {
+            $medicine = $orderDetail->medicine;
+            $qunat = $orderDetail->quantity;
+            $newQuantity = $medicine->available_quantity - $qunat;
+            $medicine->increment('sold');
+            $medicine->update(['available_quantity' => $newQuantity]);
+    }
+    return response()->json(['message' => 'order was updated',
                              'status' => true,
-                             'medicine_order' => new MedicineOrderResource($medicine_order) ,], 201);
+                             'medicine_order' => new MedicineOrderResource($medicineOrder) ,], 201);
+}
 }
 
 public function orderForAdmin()
@@ -153,7 +165,34 @@ public function orderForAdmin()
     $medicine_order = Medicine_order::query()->get();
     return response()->json(['message' => 'orders were found' ,
                              'status' => true,
-                             'medicine_order' => new MedicineOrderCollection($medicine_order) ,], 201);
+                             'medicine_order' => new MedicineOrderCollection($medicine_order) ,], 200);
 }
+//get the order by the date
+public function orderDate(Request $request)
+{
+    // Assuming $request is the admin's request
+    $year = ($request->input('y'));
+    $month = ($request->input('m'));
 
+    // Set the start and end dates based on the provided year and month
+    $startDate = Carbon::create($year, $month, 1, 0, 0, 0)->startOfDay();
+    $endDate = $startDate->copy()->endOfMonth()->endOfDay();
+    // Retrieve orders within the date range
+    $ordersQuery = Medicine_order::whereBetween('created_at', [$startDate, $endDate]);
+    if (!$ordersQuery) {
+        return response()->json(['error' => 'The Medicine Order not found'], 404);
+    }
+    $orderCount = $ordersQuery->count();
+    $orders = $ordersQuery->get();
+    $totalPrice = Medicine_order::sum('total_price');
+    return response()->json([
+        'message' => 'orders were found',
+        'status' => true,
+        'orderCount' => $orderCount,
+        'totalPrice' => $totalPrice,
+        'mostSellerProducts' => Functions::get6MostSellerProducts(),
+        'mostVisitedProducts' => Functions::get6MostVisitedProducts(),
+        'medicineOrders' => new MedicineOrderCollection($orders),
+    ], 200);
+}
 }
