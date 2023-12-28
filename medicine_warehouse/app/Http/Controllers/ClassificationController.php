@@ -101,12 +101,13 @@ class ClassificationController extends Controller
 
         if ($request->has('tradeName')) {
             $searchTerm = $request->query('tradeName');
-            $medicines =$medicinesQuery->where('trade_name', 'LIKE', '%' . $searchTerm . '%')->get();
-                if ($medicines->isEmpty()) {
+            $medicines =$medicinesQuery->where('trade_name', 'LIKE', '%' . $searchTerm . '%')->first();
+                if (!$medicines) {
                     return response()->json([
                         'result' => false,
                         'error' => 'Select an existing item'], 404);
                 }
+              $medicines->increment('review');
         }
 
 

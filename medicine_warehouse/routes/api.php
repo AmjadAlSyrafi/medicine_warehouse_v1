@@ -46,6 +46,9 @@ Route::middleware(['auth:sanctum' , 'role:admin' , 'checkSanctumToken'])->group(
     Route::apiResource('/company', CompanyController::class);
     //CRUD for classification
     Route::apiResource('/classifications', ClassificationController::class);
+    //......Report.....
+    //get the order by range of date  ex:   ?y=2023&&m=12
+    Route::get('/order_report' , [MedicineOrderController::class , 'orderDate']);
 });
 
 //----------------------------------------------------------------------------------------------
