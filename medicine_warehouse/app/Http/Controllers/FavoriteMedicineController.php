@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\FavoriteMedicineResource;
 use App\Models\FavoriteMedicine;
+use Illuminate\Http\Request;
+use App\Http\Resources\MedicineResource;
+use App\Http\Resources\MedicineCollection;
 use App\Http\Requests\StoreFavoriteMedicineRequest;
 use App\Http\Requests\UpdateFavoriteMedicineRequest;
+use App\Http\Controllers\Repo\Functions;
 
 class FavoriteMedicineController extends Controller
 {
@@ -94,4 +98,49 @@ class FavoriteMedicineController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+        // Get the authenticated user
+        $user = auth()->user();
+
+        // Search for the favorite medicine by medicine ID and user ID
+        $favoriteMedicine = FavoriteMedicine::where('medicine_id', $request->input('medicine_id'))
+            ->where('user_id', $user->id)
+            ->first();
+
+        if ($favoriteMedicine) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Favorite medicine found',
+                'favorite_medicine' => new MedicineResource($favoriteMedicine->medicine),
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Favorite medicine not found',
+            ], 404);
+        }
+    }
+
+    public function getFavoriteMedicines(Request $request)
+{
+    // Get the authenticated user
+    $user = auth()->user();
+    $favoriteMedicines =
+    $favoriteMedicines = FavoriteMedicine::where('user_id', $user->id);
+    // Retrieve the favorite medicines for the user
+    $favoriteMedicines = $user->favoriteMedicines;
+    // Extract medicine models from the favorite records
+    $medicines = $favoriteMedicines->map(function ($favorite) {
+        return $favorite->medicine;
+    });
+    $medicines = Functions::makeFavorite($medicines);
+    return response()->json([
+        'status' => true,
+        'message' => 'Favorite medicines retrieved successfully',
+        'favorite_medicines' => new MedicineCollection($medicines),
+    ], 200);
+}
+
 }
